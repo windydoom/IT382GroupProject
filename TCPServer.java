@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
@@ -9,6 +7,9 @@ class TCPServer {
 	private Socket socket = null;
 	private ObjectInputStream objectInputStream= null;
 	private ObjectOutputStream objectOutputStream= null;
+	private ByteArrayOutputStream byteArrayOutputStream= null;
+	private DataOutputStream dataOutputStream = null;
+	private BufferedReader bufferedReader = null;
 	private static ArrayList<String> fileNames = new ArrayList();
 
 
@@ -20,10 +21,12 @@ class TCPServer {
 
 			//Establish socket connection
 			socket = welcomeSocket.accept();
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
+			dataOutputStream = new DataOutputStream(socket.getOutputStream());
+			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+			dataOutputStream.writeBytes(getFileNames());
+			dataOutputStream.writeBytes("\n");
 
 
 			//Creating an instance of the file transfer helper class
@@ -37,21 +40,21 @@ class TCPServer {
 
 	}
 
-	public static ArrayList<String> getFileNames(String curDirectory){
-		File[] files = new File(curDirectory).listFiles();
+	public static String getFileNames(){
+		File[] files = new File("C:\\DB").listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 
 			for(File file :files) {
 				if (file.isFile()) {
 					fileNames.add(file.getName());
 				}
-			} return (fileNames);
+			} return (fileNames.toString());
 	}
 
 
 	public static void main(String argv[]) throws Exception{
-		//TCPServer server = new TCPServer();
-		System.out.println(getFileNames("C:\\DB"));
+		TCPServer server = new TCPServer();
+		//System.out.println(getFileNames("C:\\DB"));
 	}
 
   }
