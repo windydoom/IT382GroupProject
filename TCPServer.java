@@ -47,37 +47,27 @@ class TCPServer {
 					dataOutputStream.writeBytes(getFileNames());
 					dataOutputStream.writeBytes("\n");
 
-					System.out.println("before File");
+					//Getting file name from client and creating String with absolute path
 					fileName = bufferedReader.readLine();
 					fileName = "C:\\DB\\"+fileName;
-					//Getting file name to sendFile
+
+					//Creating File object with fileName
 					File file = new File(fileName);
 
 					//initializing fileTransferProcessor over the socket to server as helper class and then send the file
-					fileTransferProcessor = new FileTransferProcessor(socket);
-					fileTransferProcessor.sendFile(file);
-
-
-
-
+					try {
+						fileTransferProcessor = new FileTransferProcessor(socket);
+						fileTransferProcessor.sendFile(file);
+					} catch (Exception e){
+						e.printStackTrace();
+					}
 					break;
+
 				//Upload a file
 				case 2:
 					System.out.println("case 2");
 					break;
 			}
-
-
-
-
-
-
-
-			//Creating an instance of the file transfer helper class
-			//FileTransferProcessor fileTransfer = new FileTransferProcessor(socket);
-
-			//Attempts to receive a test file called test.PNG
-			//fileTransfer.receiveFile("test.PNG");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -44,7 +44,6 @@ class TCPClient {
 
 
 			switch (Integer.parseInt(uploadOrDownload)){
-
 				//Download
 				case 1:
 					System.out.println("Choose from the following files to download: " + bufferedReader.readLine());
@@ -53,32 +52,20 @@ class TCPClient {
 					//Writing whether the client wants to download or upload
 					dataOutputStream.writeBytes(fileName + "\n");
 
-					System.out.println("Made it this far");
-
-					fileTransferProcessor = new FileTransferProcessor(clientSocket);
-					fileTransferProcessor.receiveFile(fileName);
-
+					try {
+						fileTransferProcessor = new FileTransferProcessor(clientSocket);
+						fileTransferProcessor.receiveFile(fileName);
+					} catch(Exception e){
+						e.printStackTrace();
+					}
 					break;
 
+				//Upload
 				case 2:
 					System.out.println("2");
 					break;
 
 			}
-
-
-
-
-			//Creating an instance of the file transfer helper class
-			//FileTransferProcessor fileTransfer = new FileTransferProcessor(clientSocket);
-
-
-			//Creates new test file entitled test.PNG
-			//File file = new File("test.PNG");
-
-			//Calling the sendFile method from FileTransferProcess class
-			//fileTransfer.sendFile(file);
-
 
 			clientSocket.close();
 		} catch(Exception e){
