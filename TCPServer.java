@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 class TCPServer {
 	private byte[] buffer = null;
+	private String fileName = "";
 	private ServerSocket welcomeSocket = null;
 	private Socket socket = null;
 	private FileInputStream fileInputStream = null;
@@ -47,11 +48,12 @@ class TCPServer {
 					dataOutputStream.writeBytes("\n");
 
 					System.out.println("before File");
+					fileName = bufferedReader.readLine();
+					fileName = "C:\\DB\\"+fileName;
+					//Getting file name to sendFile
+					File file = new File(fileName);
 
-					File file = new File(bufferedReader.readLine());
-
-					System.out.println(file.toString());
-
+					//initializing fileTransferProcessor over the socket to server as helper class and then send the file
 					fileTransferProcessor = new FileTransferProcessor(socket);
 					fileTransferProcessor.sendFile(file);
 
