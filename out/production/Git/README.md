@@ -1,16 +1,6 @@
 # IT382GroupProject - UpDown File Hosting
 
-## TODO: FIX ERROR WHEN ATTEMPTING TO UPLOAD AND THEN DOWNLOAD.
-
-java.net.SocketException: Connection reset by peer: socket write error
-	at java.net.SocketOutputStream.socketWrite0(Native Method)
-	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:111)
-	at java.net.SocketOutputStream.write(SocketOutputStream.java:134)
-	at java.io.DataOutputStream.writeBytes(DataOutputStream.java:276)
-	at TCPClient.<init>(TCPClient.java:34)
-	at TCPClient.main(TCPClient.java:95)
-
-
+## TODO: FIX ERROR WHEN ATTEMPTING TO DOWNLOAD AND THEN UPLOAD.
 
 **By Default port 1237x will be used in both client and server. This can easily be changed in both TCPClient.java and TCPServer.java but 
 it must remain consistent**
