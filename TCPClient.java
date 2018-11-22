@@ -3,13 +3,14 @@ import java.net.*;
 import java.util.Scanner;
 
 class TCPClient {
-	private static int number;
-    private static boolean repeat = true;
+	private Scanner console = null;
 	private Socket clientSocket = null;
 	private BufferedReader bufferedReader = null;
 	private DataOutputStream dataOutputStream = null;
 	private FileTransferProcessor fileTransferProcessor = null;
-	private Scanner console = null;
+
+	private static int number;
+	private static boolean repeat = true;
 
 	public TCPClient(){
 	    repeat = false;

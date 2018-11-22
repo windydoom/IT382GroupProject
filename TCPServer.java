@@ -3,16 +3,16 @@ import java.net.*;
 import java.util.ArrayList;
 
 class TCPServer {
-	private static int number;
-    private static boolean repeat = true;
+	private Socket socket = null;
 	private String fileName = "";
 	private ServerSocket welcomeSocket = null;
-	private Socket socket = null;
-	private DataOutputStream dataOutputStream = null;
 	private BufferedReader bufferedReader = null;
+	private DataOutputStream dataOutputStream = null;
 	private FileTransferProcessor fileTransferProcessor= null;
-	private static ArrayList<String> fileNames = null;
 
+	private static int number;
+	private static boolean repeat = true;
+	private static ArrayList<String> fileNames = null;
 
 	public TCPServer() {
 	    repeat = false;
