@@ -3,6 +3,7 @@ import java.net.*;
 import java.util.Scanner;
 
 class TCPClient {
+	private static int number;
     private static boolean repeat = true;
 	private Socket clientSocket = null;
 	private BufferedReader bufferedReader = null;
@@ -18,9 +19,9 @@ class TCPClient {
 
 			console = new Scanner(System.in);
 			//Establishing the socket on the given server
-			clientSocket = new Socket("localhost", 12374);
-			System.out.println("Connected");
+			clientSocket = new Socket("localhost", 12375);
 
+			display(number);
 			System.out.println("Please choose from the following:\n1: Download a file\n2: Upload a file");
 
 			//Getting input and output streams
@@ -50,6 +51,7 @@ class TCPClient {
 					try {
 						fileTransferProcessor = new FileTransferProcessor(clientSocket);
 						fileTransferProcessor.receiveFile(fileName);
+						System.out.println("Successfully downloaded: " + fileName);
 					} catch(Exception e){
 						e.printStackTrace();
 					}
@@ -72,10 +74,10 @@ class TCPClient {
                     try {
                         fileTransferProcessor = new FileTransferProcessor(clientSocket);
                         fileTransferProcessor.sendFile(file);
+						System.out.println("Successfully uploaded: " + file.toString());
                     } catch (Exception e){
                         e.printStackTrace();
                     }
-
 					break;
 
 			}
@@ -86,11 +88,20 @@ class TCPClient {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+
+
+		System.out.println("\n");
 		repeat = true;
+		number = 1;
 	}
 
+	public void display(int turn){
+		if (turn == 0)
+			System.out.println("Connected");
+	}
 
     public static void main(String argv[]){
+		number = 0;
 	    while(repeat) {
             TCPClient client = new TCPClient();
         }

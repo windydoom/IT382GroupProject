@@ -3,6 +3,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 class TCPServer {
+	private static int number;
     private static boolean repeat = true;
 	private String fileName = "";
 	private ServerSocket welcomeSocket = null;
@@ -18,11 +19,13 @@ class TCPServer {
 	    fileNames = new ArrayList<>();
 		try {
 			//Establish ServerSocket on port 12375
-			welcomeSocket = new ServerSocket(12374);
-			System.out.println("Server Started\nWaiting for Client...");
+			welcomeSocket = new ServerSocket(12375);
+			display(number);
+			number++;
 
 			//Establish socket connection
 			socket = welcomeSocket.accept();
+			display(number);
 
 			//Getting input and output streams
 			dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -53,6 +56,7 @@ class TCPServer {
 					try {
 						fileTransferProcessor = new FileTransferProcessor(socket);
 						fileTransferProcessor.sendFile(file);
+						System.out.println("Successfully sent file: " + file.toString());
 					} catch (Exception e){
 						e.printStackTrace();
 					}
@@ -68,10 +72,10 @@ class TCPServer {
                     try {
                         fileTransferProcessor = new FileTransferProcessor(socket);
                         fileTransferProcessor.receiveFile(fileName);
+						System.out.println("Successfully downloaded: " + fileName);
                     } catch(Exception e){
                         e.printStackTrace();
                     }
-                    System.out.println(fileName);
 					break;
 			}
 		} catch (Exception e) {
@@ -86,7 +90,7 @@ class TCPServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+		number = 2;
         repeat = true;
     }
 
@@ -101,8 +105,16 @@ class TCPServer {
 			} return (fileNames.toString());
 	}
 
+	public void display(int turn){
+		if (turn == 0)
+			System.out.println("Server Started\nWaiting for Client...");
+		else if (turn == 1)
+			System.out.println("Connected to Client");
+		else{}
+	}
 
 	public static void main(String argv[]){
+		number = 0;
 	    while (repeat) {
             TCPServer server = new TCPServer();
         }
