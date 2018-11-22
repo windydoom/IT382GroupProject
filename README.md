@@ -13,7 +13,21 @@ java.net.SocketException: Connection reset by peer: socket write error
 
 
 **By Default port 1237x will be used in both client and server. This can easily be changed in both TCPClient.java and TCPServer.java but 
-it must remain consistent**
+it must remain consistent.**
+
+## TO RUN
+Simply compile code and run:
+
+### TCPServer - Server
+
+```
+java TCPServer
+```
+
+### TCPClient - Client
+```
+java TCPClient
+```
 
 ## SERVER
 * Server needs to run on Windows based machine <br />
