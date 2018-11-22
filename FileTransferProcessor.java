@@ -37,9 +37,10 @@ class FileTransferProcessor {
             }
             bos.close();
             is.close();
-        } catch (IOException e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
 	//To run, you must specify the name of the file that you are trying to send.
@@ -61,7 +62,7 @@ class FileTransferProcessor {
             out.close();
             fis.close();
             bis.close();
-        } catch (IOException e) {
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
