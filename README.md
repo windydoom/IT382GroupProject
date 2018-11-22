@@ -1,4 +1,4 @@
-# IT382GroupProject
+# IT382GroupProject - UpDown File Hosting
 
 **By Default port 1237x will be used in both client and server. This can easily be changed in both TCPClient.java and TCPServer.java but 
 it must remain consistent**
