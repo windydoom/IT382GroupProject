@@ -3,27 +3,22 @@ import java.net.*;
 import java.util.ArrayList;
 
 class TCPServer {
-	private byte[] buffer = null;
+    private static boolean repeat = true;
 	private String fileName = "";
 	private ServerSocket welcomeSocket = null;
 	private Socket socket = null;
-	private FileInputStream fileInputStream = null;
-	private BufferedInputStream bufferedInputStream = null;
-	private BufferedOutputStream bufferedOutputStream = null;
-	private ObjectInputStream objectInputStream= null;
-	private ObjectOutputStream objectOutputStream= null;
-	private DataInputStream dataInputStream = null;
-	private ByteArrayOutputStream byteArrayOutputStream= null;
 	private DataOutputStream dataOutputStream = null;
 	private BufferedReader bufferedReader = null;
 	private FileTransferProcessor fileTransferProcessor= null;
-	private static ArrayList<String> fileNames = new ArrayList();
+	private static ArrayList<String> fileNames = null;
 
 
 	public TCPServer() {
+	    repeat = false;
+	    fileNames = new ArrayList<>();
 		try {
 			//Establish ServerSocket on port 12375
-			welcomeSocket = new ServerSocket(12376);
+			welcomeSocket = new ServerSocket(12374);
 			System.out.println("Server Started\nWaiting for Client...");
 
 			//Establish socket connection
@@ -41,7 +36,7 @@ class TCPServer {
 			//Will receive the client's request to either upload or download a file via String then will be switched
 			switch(Integer.parseInt(bufferedReader.readLine())){
 
-				//Download a file
+				//Download a file to client
 				case 1:
 					//Writing the file names available for download
 					dataOutputStream.writeBytes(getFileNames());
@@ -63,16 +58,37 @@ class TCPServer {
 					}
 					break;
 
-				//Upload a file
+				//Upload a file from client
 				case 2:
-					System.out.println("case 2");
+                    //Getting file name from client and creating String with absolute path
+                    fileName = bufferedReader.readLine();
+                    fileName = "C:\\DB\\" + fileName;
+
+                    //initializing fileTransferProcessor over the socket to server as helper class and then receive the file
+                    try {
+                        fileTransferProcessor = new FileTransferProcessor(socket);
+                        fileTransferProcessor.receiveFile(fileName);
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    System.out.println(fileName);
 					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-	}
+        try {
+            dataOutputStream.close();
+            bufferedReader.close();
+            socket.close();
+            welcomeSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        repeat = true;
+    }
 
 	public static String getFileNames(){
 		File[] files = new File("C:\\DB").listFiles();
@@ -86,8 +102,10 @@ class TCPServer {
 	}
 
 
-	public static void main(String argv[]) throws Exception{
-		TCPServer server = new TCPServer();
+	public static void main(String argv[]){
+	    while (repeat) {
+            TCPServer server = new TCPServer();
+        }
 	}
 
   }
