@@ -1,6 +1,6 @@
 # IT382GroupProject - UpDown File Hosting
 
-## TODO: FIX ERROR WHEN ATTEMPTING TO UPLOAD AND THEN DOWNLOAD.
+## TODO: FIX ERROR WHEN ATTEMPTING TO UPLOAD AND THEN DOWNLOAD:
 
 java.net.SocketException: Connection reset by peer: socket write error
 	at java.net.SocketOutputStream.socketWrite0(Native Method)
