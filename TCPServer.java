@@ -39,7 +39,7 @@ class TCPServer {
 			//Will receive the client's request to either upload or download a file via String then will be switched
 			switch(Integer.parseInt(bufferedReader.readLine())){
 
-				//Download a file to client
+				//Download a file to client from server
 				case 1:
 					//Writing the file names available for download
 					dataOutputStream.writeBytes(getFileNames());
@@ -62,7 +62,7 @@ class TCPServer {
 					}
 					break;
 
-				//Upload a file from client
+				//Upload a file from client to server
 				case 2:
                     //Getting file name from client and creating String with absolute path
                     fileName = bufferedReader.readLine();

@@ -39,7 +39,7 @@ class TCPClient {
 
 
 			switch (Integer.parseInt(uploadOrDownload)){
-				//Download
+				//Download to client from server
 				case 1:
 					System.out.println("Choose from the following files to download: " + bufferedReader.readLine());
 					fileName = console.next();
@@ -57,7 +57,7 @@ class TCPClient {
 					}
 					break;
 
-				//Upload
+				//Upload from client to server
 				case 2:
 					System.out.println("Please specify the name or path of the file you want to upload");
 
